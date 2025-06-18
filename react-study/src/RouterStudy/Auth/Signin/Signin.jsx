@@ -159,8 +159,10 @@ function Signin(props) {
     }, [inputItems]);
 
     const handleRegisterOnClick = async () => {
-        const url = "http://localhost:8080/api/users";
+        const url = "http://localhost:8080/api/users/login";
 
+        // 컨트롤러 메소드명 login
+        // Dto명 LoginDto
         let data = {};
 
         inputItems.forEach(inputItem => {
@@ -172,9 +174,9 @@ function Signin(props) {
 
         try {
             await axios.post(url, data);
-            alert("사용자 등록 완료")
+            alert("로그인 요청 완료")
         } catch(error) {
-            alert("사용자 등록 오류");
+            alert("로그인 오류");
         }
         
     }
