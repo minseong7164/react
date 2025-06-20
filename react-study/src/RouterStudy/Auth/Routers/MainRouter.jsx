@@ -35,7 +35,6 @@ function MainRouter(props) {
                     }
                 });            
             }
-            console.log(isLogin)
             setRefresh(prev => false);
         }
     }, [refresh]);

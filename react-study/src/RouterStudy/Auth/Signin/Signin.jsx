@@ -6,6 +6,7 @@ import { IoEye, IoEyeOff } from 'react-icons/io5';
 import axios from 'axios';
 import { useLocation, useNavigate, useNavigation } from 'react-router-dom';
 import { useRefreshStore } from '../stores/storeStudy';
+import { useQueryClient } from '@tanstack/react-query';
 
 /**
  *  유효성검사(Validation Check)
@@ -116,6 +117,7 @@ function InputValidatedMessage({status, message}) {
 }
 
 function Signin() {
+    const queryClinet = useQueryClient();
     const navigate = useNavigate();
     const location = useLocation();
     const { setValue:setRefresh } = useRefreshStore();
@@ -177,10 +179,13 @@ function Signin() {
 
         try {
             const response = await axios.post(url, data);
+            console.log(response)
             const accessToken = response.data?.accessToken;
             if (!!accessToken) {
                 localStorage.setItem("AccessToken", accessToken);
-                setValue(prev => true);
+                queryClinet.invalidateQueries({
+                    queryKey: ["principalUserQuery"],
+                });                
                 navigate("/")
             }
             alert("로그인 요청 완료");
